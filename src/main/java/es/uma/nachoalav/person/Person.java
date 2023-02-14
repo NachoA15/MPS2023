@@ -1,5 +1,7 @@
 package es.uma.nachoalav.person;
 
+import java.util.List;
+
 /**
  * Class representing a person with a name, age and gender.
  *
@@ -13,12 +15,20 @@ public class Person {
     /**
      * Constructs a person with a name, age and gender.
      *
-     * @param name
-     * @param age
-     * @param gender
+     * @param name the name of the person
+     * @param age the age of the person
+     * @param gender the gender of the person
      */
     public Person(String name, int age, String gender) {
-
+        if (age <= 0 || age > 130) {
+            throw new InvalidPersonArgumentException("Age must be between 1 and 130");
+        }
+        if (!gender.equalsIgnoreCase("Male") && !gender.equalsIgnoreCase("Female")) {
+            throw new InvalidPersonArgumentException("Gender must be 'Male' of 'Female'");
+        }
+        this.name = name;
+        this.age = age;
+        this.gender = gender.equalsIgnoreCase("Male")? "Male" : "Female";
     }
 
     public String getName() {
