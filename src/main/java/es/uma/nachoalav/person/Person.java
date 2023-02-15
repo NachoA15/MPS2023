@@ -51,7 +51,7 @@ public class Person {
      * @param persons
      * @return
      */
-    public double[] averageAgePerGender(List<Person> persons) {
+    public static double[] averageAgePerGender(List<Person> persons) {
         double[] averageAge = new double[2];
         int maleCount = 0, femaleCount = 0;
         double totalMaleAge = 0.0, totalFemaleAge = 0.0;
@@ -64,8 +64,8 @@ public class Person {
                 totalFemaleAge += p.getAge();
             }
         }
-        averageAge[0] = maleCount > 0? averageAge[0]/maleCount : averageAge[0];
-        averageAge[1] = femaleCount > 0? averageAge[1]/femaleCount : averageAge[1];
+        averageAge[0] = maleCount > 0? averageAge[0]/maleCount : 0.0;
+        averageAge[1] = femaleCount > 0? averageAge[1]/femaleCount : 0.0;
 
         return averageAge;
     }
