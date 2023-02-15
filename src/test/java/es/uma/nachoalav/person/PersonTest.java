@@ -16,10 +16,18 @@ import static org.junit.jupiter.api.Assertions.*;
  *  2. Creating a person with age 0 -> Raise InvalidPersonArgumentException
  *  3. Creating a person with age 131 -> Raise InvalidPersonArgumentException
  *  4. Creating a person with gender 'hello' -> Raise InvalidPersonArgumentException
- *  5. Calculating the mean age per gender when there are no persons on the list -> mean is 0.0 for both genders
- *  6. Calculating the mean age per gender when there are only males on the list -> mean is 0.0 for females
- *  7. Calculating the mean age per gender when there are only females on the list -> mean is 0.0 for males
- *  8. Calculating the mean age per gender when there are males and females on the list -> mean is not 0.0 for any gender
+ *  5. Creating a person with an empty name -> Raise InvalidPersonArgumentException
+ *  6. Calculating the mean age per gender when there are no persons on the list
+ *      -> mean is 0.0 for both genders
+ *  7. Calculating the mean age per gender when there are only males on the list
+ *      -> mean is 0.0 for females
+ *  8. Calculating the mean age per gender when there are only females on the list
+ *      -> mean is 0.0 for males
+ *  9. Calculating the mean age per gender when there are males and females on the list
+ *      -> mean is not 0.0 for any gender
+ *  10. Calculating the mean age per gender when there are just three males on the list:
+ *      one with age 30, other with age 63 and another with age 27
+ *      -> male mean is 40.0
  */
 
 class PersonTest {
@@ -58,6 +66,13 @@ class PersonTest {
     void shouldRaiseExceptionConstructorOfPersonWhenGenderIsHello() {
         assertThrows(InvalidPersonArgumentException.class, () -> {
             person1 = new Person("Name",30,"Hello");
+        });
+    }
+
+    @Test
+    void shouldRaiseExceptionConstructorOfPersonWhenNameIsEmpty() {
+        assertThrows(InvalidPersonArgumentException.class, () -> {
+            person1 = new Person("",30,"Hello");
         });
     }
 
@@ -117,5 +132,19 @@ class PersonTest {
         assertNotEquals(unexpectedValue, obtainedArray[1]);
     }
 
+    @Test
+    void maleMeanShouldBe40WhenThereAreMalesOnListWithAges30And63And27() {
+        person1 = new Person("P1",30,"Male");
+        person2 = new Person("P2",63,"Male");
+        person3 = new Person("P3",27,"Male");
 
+        persons.add(person1);
+        persons.add(person2);
+        persons.add(person3);
+
+        double expectedValue = 40.0;
+        double[] obtainedArray = Person.averageAgePerGender(persons);
+
+        assertEquals(expectedValue,obtainedArray[0]);
+    }
 }

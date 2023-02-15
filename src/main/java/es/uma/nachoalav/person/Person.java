@@ -26,6 +26,10 @@ public class Person {
         if (!gender.equalsIgnoreCase("Male") && !gender.equalsIgnoreCase("Female")) {
             throw new InvalidPersonArgumentException("Gender must be 'Male' of 'Female'");
         }
+        if (name.length() == 0) {
+            throw new InvalidPersonArgumentException("Name can't be an empty string");
+        }
+
         this.name = name;
         this.age = age;
         this.gender = gender.equalsIgnoreCase("Male")? "Male" : "Female";
