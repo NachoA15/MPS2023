@@ -16,42 +16,48 @@ import static org.junit.jupiter.api.Assertions.*;
  *  2. Creating a person with age 0 -> Raise InvalidPersonArgumentException
  *  3. Creating a person with age 131 -> Raise InvalidPersonArgumentException
  *  4. Creating a person with gender 'hello' -> Raise InvalidPersonArgumentException
+ *  5. Calculating the mean age per gender when there are no persons on the list -> mean is 0.0 for both genders
+ *  6. Calculating the mean age per gender when there are only males on the list -> mean is 0.0 for females
+ *  7. Calculating the mean age per gender when there are only females on the list -> mean is 0.0 for males
+ *  8. Calculating the mean age per gender when there are males and females on the list -> mean is not 0.0 for any gender
  */
 
 class PersonTest {
-    private Person person;
+    private Person person1, person2, person3;
     private List<Person> persons;
 
     @BeforeEach
     void start() {
-        person = null;
+        person1 = null;
+        person2 = null;
+        person3 = null;
         persons = new ArrayList<>();
     }
 
     @Test
     void shouldRaiseExceptionConstructorOfPersonWhenAgeIsMinusOne() {
         assertThrows(InvalidPersonArgumentException.class, () -> {
-            person = new Person("Name",-1,"Male");
+            person1 = new Person("Name",-1,"Male");
         });
     }
     @Test
     void shouldRaiseExceptionConstructorOfPersonWhenAgeIs0() {
         assertThrows(InvalidPersonArgumentException.class, () -> {
-            person = new Person("Name",0,"Male");
+            person1 = new Person("Name",0,"Male");
         });
     }
 
     @Test
     void shouldRaiseExceptionConstructorOfPersonWhenAgeIs131() {
         assertThrows(InvalidPersonArgumentException.class, () -> {
-            person = new Person("Name",131,"Female");
+            person1 = new Person("Name",131,"Female");
         });
     }
 
     @Test
     void shouldRaiseExceptionConstructorOfPersonWhenGenderIsHello() {
         assertThrows(InvalidPersonArgumentException.class, () -> {
-            person = new Person("Name",30,"Hello");
+            person1 = new Person("Name",30,"Hello");
         });
     }
 
@@ -64,13 +70,13 @@ class PersonTest {
 
     @Test
     void meanMaleAgeShouldBeZeroWhenPersonsOnListAreAllFemale() {
-        Person p1 = new Person("P1",30,"Female");
-        Person p2 = new Person("P2",31,"Female");
-        Person p3 = new Person("P3",32,"Female");
+        person1 = new Person("P1",30,"Female");
+        person2 = new Person("P2",31,"Female");
+        person3 = new Person("P3",32,"Female");
 
-        persons.add(p1);
-        persons.add(p2);
-        persons.add(p3);
+        persons.add(person1);
+        persons.add(person2);
+        persons.add(person3);
 
         double[] obtainedArray = Person.averageAgePerGender(persons);
         double expectedValue = 0.0;
@@ -80,18 +86,35 @@ class PersonTest {
 
     @Test
     void meanFemaleAgeShouldBeZeroWhenPersonsOnListAreAllMale() {
-        Person p1 = new Person("P1",30,"Male");
-        Person p2 = new Person("P2",31,"Male");
-        Person p3 = new Person("P3",32,"Male");
+        person1 = new Person("P1",30,"Male");
+        person2 = new Person("P2",31,"Male");
+        person3 = new Person("P3",32,"Male");
 
-        persons.add(p1);
-        persons.add(p2);
-        persons.add(p3);
+        persons.add(person1);
+        persons.add(person2);
+        persons.add(person3);
 
         double[] obtainedArray = Person.averageAgePerGender(persons);
         double expectedValue = 0.0;
 
         assertEquals(expectedValue, obtainedArray[1]);
+    }
+
+    @Test
+    void meanShouldNotBeZeroForAnyGenderWhenThereAreMalesAndFemalesOnList() {
+        person1 = new Person("P1",30,"Male");
+        person2 = new Person("P2",49,"Female");
+        person3 = new Person("P3",32,"Male");
+
+        persons.add(person1);
+        persons.add(person2);
+        persons.add(person3);
+
+        double[] obtainedArray = Person.averageAgePerGender(persons);
+        double unexpectedValue = 0.0;
+
+        assertNotEquals(unexpectedValue, obtainedArray[0]);
+        assertNotEquals(unexpectedValue, obtainedArray[1]);
     }
 
 
