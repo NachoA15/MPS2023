@@ -59,6 +59,8 @@ public class Person {
         double[] averageAge = new double[2];
         int maleCount = 0, femaleCount = 0;
         double totalMaleAge = 0.0, totalFemaleAge = 0.0;
+
+        // Loop through the persons list and sum up the age for each gender
         for (Person p : persons) {
             if (p.getGender().equals("Male")) {
                 maleCount++;
@@ -68,6 +70,8 @@ public class Person {
                 totalFemaleAge += p.getAge();
             }
         }
+
+        // Calculate the average age for each gender and store it in the averageAge array
         averageAge[0] = maleCount > 0? Math.round(totalMaleAge/maleCount*100.0)/100.0 : 0.0;
         averageAge[1] = femaleCount > 0? Math.round(totalFemaleAge/femaleCount*100.0)/100.0 : 0.0;
 
