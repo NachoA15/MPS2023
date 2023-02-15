@@ -68,8 +68,8 @@ public class Person {
                 totalFemaleAge += p.getAge();
             }
         }
-        averageAge[0] = maleCount > 0? totalMaleAge/maleCount : 0.0;
-        averageAge[1] = femaleCount > 0? totalFemaleAge/femaleCount : 0.0;
+        averageAge[0] = maleCount > 0? Math.round(totalMaleAge/maleCount*100.0)/100.0 : 0.0;
+        averageAge[1] = femaleCount > 0? Math.round(totalFemaleAge/femaleCount*100.0)/100.0 : 0.0;
 
         return averageAge;
     }
