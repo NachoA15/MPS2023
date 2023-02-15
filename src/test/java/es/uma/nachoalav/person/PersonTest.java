@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *  3. Creating a person with age 131 -> Raise InvalidPersonArgumentException
  *  4. Creating a person with gender 'hello' -> Raise InvalidPersonArgumentException
  *  5. Creating a person with an empty name -> Raise InvalidPersonArgumentException
+ *  6. Creating a person called 'Test' then getting its name -> Should return 'Test'
  *  6. Calculating the mean age per gender when there are no persons on the list
  *      -> mean is 0.0 for both genders
  *  7. Calculating the mean age per gender when there are only males on the list
@@ -80,6 +81,19 @@ class PersonTest {
         assertThrows(InvalidPersonArgumentException.class, () -> {
             person1 = new Person("",30,"Male");
         });
+    }
+
+    /**
+     * NOTE: we won't test explicitly the other getters because they are covered in other sections
+     * of the code. The getName() method is actually the only one that isn't called at any point.
+     * In short, this test makes the coverage of the code reach 100%.
+     */
+    @Test
+    void getNameMethodAppliedToAPersonShouldReturnTheNameOfSaidPerson() {
+        person1 = new Person("Test",30,"Female");
+        String expectedString = "Test";
+        String actualString = person1.getName();
+        assertEquals(expectedString,actualString);
     }
 
     /**
